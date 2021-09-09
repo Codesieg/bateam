@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      {% block title %}
+        Bateam's Movies
+      {% endblock %}
+    </title>
+    {# Run `composer require symfony/webpack-encore-bundle`
+            and uncomment the following Encore helpers to start using Symfony UX #}
+    {% block stylesheets %}
+      {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+  </head>
+  <body>
+    {% block body %}{% endblock %}
+    <header class="">
+      <div class="container d-flex flex-column align-items-center">
+        <a class="text-decoration-none" href="{{ path('movies_browse') }}">
+          <h1 class="m-3">
+            Bateam's Movies
+          </h1>
+        </a>
+        <form action="" method="POST" class="d-flex w-50 m-3 justify-content-center">
+          <input name="search" class="form-control me-sm-2" type="text" placeholder="Rechercher : Nom du film, Réalisateur " value="{{ search }}">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+            Rechercher
+          </button>
+        </form>
+
+      </div>
+    </header>
+    <main class="container">
+      <section class="result mx-3">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Nom du film</th>
+              <th scope="col">
+                <div class="d-flex">Réalisateur</th>
+              <th scope="col">
+                <div class="d-flex">
+                  <form action="{{ path('movies_read') }}" method="POST" class="d-flex">
+                    <select name="year" class="form-select me-3" id="year">
+                      <option>Année de production</option>
+                      {% for year in moviesByYear %}
+                      <option value="{{ year }}" {{ year == year ? "selected" :"" }} >{{ year }}</option>
+                      {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                  </form>
+                </div>
+              </th>
+              <th scope="col">
+                <div class="d-flex">
+                <form action="{{ path('movies_read') }}" method="POST" class="d-flex">
+                  <select name="nationality" class="form-select me-3" id="nationality">
+                    <option>Nationalité</option>
+                    <option value='0'>Voir tout</option>
+                      {% for nationality in nationalities %}
+                      <option value="{{ nationality }}" {{ nationality == nationality ? "selected" :"" }} >{{ nationality }}</option>
+                      {% endfor %}
+                  </select>
+                  <button type="submit" class="btn btn-primary">Valider</button>
+                </form>
+                </div>
+              </th>
+              <th scope="col">
+                <div class="d-flex">
+                  <form action="{{ path('movies_read') }}" method="POST" class="d-flex">
+                    <select name="lastBroadCast" class="form-select me-3" id="lastBroadCast">
+                      <option>Dernière diffusion</option>
+                      {% for lastbroadCast in lastBroadCasts %}
+                      <option value="{{ lastbroadCast }}" {{ lastbroadCast == lastbroadCast ? "selected" :"" }} >{{ lastbroadCast }}</option>
+                      {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                  </form>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{ dd(allMovies) }}
+  
+              <tr class="table-active">
+                <td>{{ allMovies.nom }}</td>
+                <td>{{ allMovies.realisateur }}</td>
+                <td></td>
+                <td>{{ allMovies.nationalite }}</td>
+                <td></td>
+              </tr>
+         
+          </tbody>
+        </section>
+      </main>
+    </table>
+  </body>
+  {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+  {% endblock %}
+</html>

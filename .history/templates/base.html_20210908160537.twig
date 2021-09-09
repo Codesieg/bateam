@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      {% block title %}
+        Bateam's Movies
+      {% endblock %}
+    </title>
+    {# Run `composer require symfony/webpack-encore-bundle`
+            and uncomment the following Encore helpers to start using Symfony UX #}
+    {% block stylesheets %}
+      {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+  </head>
+  <body>
+    {% block body %}{% endblock %}
+    <header class="">
+      <div class="container d-flex flex-column align-items-center">
+          <h1 class="m-3">
+            Bateam's Movies
+          </h1>
+        </a>
+        <div class="d-flex w-100 m-3 justify-content-center">
+          <form action="{{ path('movies_browse') }}" method="GET" class="d-flex">
+          <input name="search" class="form-control me-sm-2" type="text" placeholder="Rechercher : nom, nom_court, commentaire, reference_fabricant " value="">
+          </div>
+      </div>
+    </header>
+    <main class="container">
+      <section class="result mx-3">
+      <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Nom du film</th>
+              <th scope="col">
+                <div class="d-flex">Réalisateur</th>
+              <th scope="col">
+                <div class="d-flex">
+                    <select name="year" class="form-select me-3" id="year">
+                      <option>Année de production</option>
+                      {# {% for year in moviesYear %}
+                      <option value="{{ year }}" {{ year == year ? "selected" :"" }} >{{ year }}</option>
+                      {% endfor %} #}
+                    </select>
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                  </form>
+                </div>    
+              <option>Anné de production</option>
+              </th>
+              <th scope="col">
+                <option>Nationalité</option>
+              </th>
+              <th scope="col">
+            <option>Derniere diffusion</option>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for movie in allMovies %}
+              <tr class="table-active">
+                <td>{{ movie.nom }}</td>
+                <td>{{ movie.realisateur }}</td>
+                <td>{{ movie.anneeProduction }}</td>
+                <td>{{ movie.nationalite }}</td>
+                <td>{{ movie.derniereDiffusion }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </section>
+      </main>
+    </table>
+  </body>
+  {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+  {% endblock %}
+</html>

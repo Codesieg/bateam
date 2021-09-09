@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      {% block title %}
+        Bateam's Movies
+      {% endblock %}
+    </title>
+    {# Run `composer require symfony/webpack-encore-bundle`
+            and uncomment the following Encore helpers to start using Symfony UX #}
+    {% block stylesheets %}
+      {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+  </head>
+  <body>
+    {% block body %}{% endblock %}
+    <header class="">
+      <div class="container d-flex flex-column align-items-center">
+        <a class="text-decoration-none" href="{{ path('materiels_browse') }}">
+          <h1 class="m-3">
+            Bateam's Movies
+          </h1>
+        </a>
+        <form action="" method="POST" class="d-flex w-50 m-3 justify-content-center">
+          <input name="search" class="form-control me-sm-2" type="text" placeholder="Rechercher : Nom du film, Réalisateur " value="{{ search }}">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+            Rechercher
+          </button>
+        </form>
+        <form action="" } method="POST">
+          <fieldset>
+            <div class="form-group d-flex ms-3 mb-3">
+              <div class="me-3">
+                <select name="famille" class="form-select " id="famille">
+                  <option>
+                    Choisir la famille :
+                  </option>
+                  <option value='0'>
+                    Voir tout
+                  </option>
+
+                </select>
+              </div>
+              <div class="d-flex">
+                <select name="marque" class="form-select me-3" id="marque">
+                  <option>
+                    Choisir la marque : 
+                  </option>
+                  <option value='0'>
+                    Voir tout
+                  </option>
+                </select>
+                <button type="submit" class="btn btn-primary">
+                  Valider
+                </button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+
+      </div>
+    </header>
+    <main class="container">
+      <section class="result mx-3">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">
+                <div class="d-flex">
+                  <select name="movieName" class="form-select me-3" id="movieName">
+                    <option>Nom du film</option>
+                    <option value='0'>Voir tout</option>
+                  </select>
+                  <button type="submit" class="btn btn-primary">Valider</button>
+                </div>
+              </th>
+              <th scope="col">
+                <div class="d-flex">
+                  <select name="director" class="form-select me-3" id="director">
+                    <option>Réalisateur</option>
+                    <option value='0'>Voir tout</option>
+                  </select>
+                  <button type="submit" class="btn btn-primary">Valider</button>
+                </div>
+              </th>
+              <th scope="col">
+              <div class="d-flex">
+              <select name="year" class="form-select me-3" id="year">
+                <option>Année de production</option>
+                <option value='0'>Voir tout</option>
+              </select>
+              <button type="submit" class="btn btn-primary">Valider</button>
+            </div>
+                
+              </th>
+              <th scope="col">
+                <div class="d-flex">
+                  <select name="marque" class="form-select me-3" id="marque">
+                    <option>
+                      Choisir la marque : 
+                    </option>
+                    <option value='0'>
+                      Voir tout
+                    </option>
+                  </select>
+                  <button type="submit" class="btn btn-primary">
+                    Valider
+                  </button>
+                </div>
+                Nationalité
+              </th>
+              <th scope="col">
+                <div class="d-flex">
+                  <select name="marque" class="form-select me-3" id="marque">
+                    <option>
+                      Choisir la marque : 
+                    </option>
+                    <option value='0'>
+                      Voir tout
+                    </option>
+                  </select>
+                  <button type="submit" class="btn btn-primary">
+                    Valider
+                  </button>
+                </div>
+                Dernière diffusion
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for movie in movies %}
+              <tr class="table-active">
+                <td>
+                  {{ movie.nom }}
+                </td>
+                <td>
+                  {{ movie.realisateur }}
+                </td>
+                <td>
+                  {{ movie.annee_production }}
+                </td>
+                <td>
+                  {{ movie.nationalite }}
+                </td>
+                <td>
+                  {{ movie.derniere_diffusion }}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </section>
+      </main>
+    </table>
+  </body>
+  {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+  {% endblock %}
+</html>

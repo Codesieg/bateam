@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}beproactiv{% endblock %}</title>
+        {# Run `composer require symfony/webpack-encore-bundle`
+        and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+    </head>
+    <body>
+    {% block body %}{% endblock %}
+    <header class="">
+      <div class="container d-flex flex-column align-items-center">
+            <a class="text-decoration-none" href="{{ path('materiels_browse')}}"><h1 class="m-3">Beproactiv</h1></a>
+            <form action="{{ path('search')}}" method="POST" class="d-flex w-50 m-3 justify-content-center">
+            <input name="search" class="form-control me-sm-2" type="text" placeholder="Rechercher : nom, nom_court, commentaire, reference_fabricant " value="{{ search }}">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher</button>
+                  </form>
+            <form action="{{ path('materiels_read')}}" method="POST">
+                <fieldset>
+                  <div class="form-group d-flex ms-3 mb-3">
+                    <div class="me-3">
+                      <select name="famille"class="form-select " id="famille">
+                        <option>Choisir la famille :</option>
+                        <option value='0'>Voir tout</option>
+                          {% for type in types %}
+                              <option value="{{ type.id }}"  {{ familleChoisi == type.id ? "selected" :"" }} >{{ type.famille }}</option>
+                          {% endfor %}
+                          {# {{ $_POST['famille'] == type.id ? echo "selected" :"" }}  #}
+                      </select>
+                    </div>
+                    <div class="d-flex">
+                      <select name="marque" class="form-select me-3" id="marque">
+                        <option>Choisir la marque : </option>
+                        <option value='0'>Voir tout</option>
+                        {{ dump(marqueChoisi) }}
+                        {% for marque in marques %}
+                              <option value="{{ marque.marque }}" {{ marqueChoisi == marque.marque ? "selected" :"" }}>{{ marque.marque }}</option>
+                          {% endfor %}
+                      </select>
+                      <button type="submit" class="btn btn-primary">Valider</button>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            
+        </div>
+    </header>
+    <main class="container">
+        <a href="{{ path('materiels_import')}}"><button class="btn btn-primary">Importer</button></a>
+        <section class="result mx-3">
+            <table class="table table-hover">
+                  <thead>
+            <tr>
+              <th scope="col">Materiel id</th>
+              <th scope="col">Nom Court</th>
+              <th scope="col">Marque</th>
+              <th scope="col">Prix public</th>
+              <th scope="col">Reference fabricant</th>
+              <th scope="col">Type</th>
+              <th scope="col">Type metier</th>
+            </tr>
+                  </thead>
+                  <tbody>
+                    {% for materiel in materiels %}
+                    <tr class="table-active">
+                    <td>{{ materiel.materielId }}</td>
+                    <td>{{ materiel.nomCourt }}</td>
+                    <td>{{ materiel.marque }}</td>
+                    <td>{{ materiel.prixPublic }}</td>
+                    <td>{{ materiel.referenceFabricant }}</td>
+                    <td>{{ materiel.type.nom }}</td>
+                    <td>{{ materiel.type.famille }}</td>
+                    </tr>
+        {% endfor %}
+                  </tbody>
+                  <div class="navigation">
+              {{ knp_pagination_render(materiels) }}
+          </div>
+        </section>
+    </main>
+</table>
+</body>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+</html>

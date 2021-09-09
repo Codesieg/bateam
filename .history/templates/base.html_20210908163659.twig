@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      {% block title %}
+        Bateam's Movies
+      {% endblock %}
+    </title>
+    {# Run `composer require symfony/webpack-encore-bundle`
+            and uncomment the following Encore helpers to start using Symfony UX #}
+    {% block stylesheets %}
+      {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+  </head>
+  <body>
+    {% block body %}{% endblock %}
+    <header class="">
+      <div class="container d-flex flex-column align-items-center">
+          <h1 class="m-3">Bateam's Movies </h1>
+        </a>
+        <div class="d-flex w-100 m-3 justify-content-center">
+          <form action="{{ path('movies_browse') }}" method="GET" class="d-flex">
+          <input name="search" class="form-control me-sm-2" type="text" placeholder="Film, réalisateur " value="">
+          </div>
+      </div>
+    </header>
+    <main class="container">
+      <section class="result mx-3">
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Nom du film</th>
+                  <th scope="col">
+                    <div class="d-flex">Réalisateur</th>
+                  <th scope="col">
+                    <div class="d-flex">
+                        <select name="year" class="form-select me-3" id="year">
+                          <option value="0">Année de production</option>
+                          {% for year in years %}
+                          <option value="{{ year }}" {{ year == year ? "selected" :"" }} >{{ year }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>    
+                    </th>
+                    <th scope="col">
+                    <div class="d-flex">
+                    <select name="nationality" class="form-select me-3" id="nationality">
+                      <option value="0">Nationalité</option>
+                      {% for nationality in nationalities %}
+                      <option value="{{ nationality }}">{{ nationality }}</option>
+                      {% endfor %}
+                    </select>
+                  </div> 
+                  </th>
+                  <th scope="col">
+                  <div class="d-flex">
+                  <select name="lastBroadcast" class="form-select me-3" id="lastBroadcast">
+                    <option value="0">Derniere diffusion</option>
+                    {% for last in lastBroadcast %}
+                    <option value="{{ last }}">{{ last }}</option>
+                    {% endfor %}
+                  </select>
+                </div> 
+                </th>
+              </tr>
+            </form>
+          </thead>
+          <tbody>
+            {% for movie in allMovies %}
+              <tr class="table-active">
+                <td>{{ movie.nom }}</td>
+                <td>{{ movie.realisateur }}</td>
+                <td>{{ movie.anneeProduction }}</td>
+                <td>{{ movie.nationalite }}</td>
+                <td>{{ movie.derniereDiffusion }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </section>
+      </main>
+    </table>
+  </body>
+  {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+  {% endblock %}
+</html>
